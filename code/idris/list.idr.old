@@ -1,0 +1,56 @@
+module list_nat
+
+import nat
+import pair
+
+data list_nat = nil | cons nat list_nat
+
+o0: list_nat
+o0 = nil
+
+o1: list_nat
+o1 = cons O nil 
+
+o2: list_nat -- list 1,2
+o2 = (cons (S O) (cons (S(S O)) nil))
+
+o3: list_nat -- list 1,2,3
+o3 = (cons (S O) (cons (S(S O)) (cons (S(S(S O))) nil)))
+
+length_old: list_nat -> nat
+length_old nil = O
+length_old (cons n l') = S (length l')
+
+len_o3: nat
+len_o3 = length_old l3
+
+app_old: list_nat -> list_nat -> list_nat
+app_old nil nil = nil
+app_old nil (cons h t) = cons h t
+app_old (cons h t) nil = cons h t
+app_old (cons h1 t1) (cons h2 t2) = cons h1 (app t1 (cons h2 t2))
+
+o4: list_nat
+o4 = (app nil nil)
+-- expect nil
+o5: list_nat
+o5 = (app (cons (S O) (S O)) nil) 
+-- expect cons (S O) (S O)
+
+homework: write length 
+
+append_old: list a -> list a -> list a
+append_old nil l2 = l2
+append_old (cons h l1') l2 = cons h (append_old l1' l2)
+
+length_old: list a -> list a
+length_old nil = O
+length_old (cons n l') = S (length_old l')
+
+
+
+replace all of the nats with a's like above
+
+
+ 
+ 

@@ -1,0 +1,123 @@
+module nat
+
+import bool
+import pair
+
+
+data nat = O | S nat
+
+-- zero
+z: nat
+z = O
+
+-- one
+o: nat
+o = S O
+
+-- two
+t: nat
+t = S (S O)
+
+-- three
+r: nat
+r = S t 
+--four
+f: nat
+f = S r
+-- five
+v: nat
+v = S f
+-- six
+j: nat
+j = S v
+
+
+||| returns true if the argument is (represents) zero, otherwise false
+isZero: nat -> bool
+isZero O = true
+isZero _ = false
+
+
+||| returns the successor of any given nat
+succ: nat -> nat
+succ n = S n
+
+
+y: nat
+y = o
+
+||| returns the predecessor of any given nat
+pred: nat -> nat
+pred O = O
+pred (S n) = n
+
+
+||| return true if the argument is even otherwise false
+evenb: nat -> bool
+evenb O = true
+evenb (S O) = false
+evenb (S (S n)) = evenb n
+
+oddb: nat -> bool
+oddb n = not (evenb n)
+
+
+||| given a pair of natural numbers, return its sum
+addp: pair nat nat -> nat
+addp (mkPair O m) = m
+addp (mkPair (S n) m) = S (addp (mkPair n m))
+
+add: nat -> nat -> nat
+add O m = m
+add (S n) m = S(add n m)
+
+pf: nat -> nat
+pf = add (S (S O))
+
+
+
+||| given a pair of natural numbers, return its product
+multp: pair nat nat -> nat
+multp (mkPair O m) = O
+multp (mkPair (S n) m) = addp (mkPair (multp (mkPair m n)) m)
+
+factp: nat -> nat
+factp O = O
+factp (S n) = multp (mkPair (S n) (factp n))
+
+subp: pair nat nat -> nat
+subp (mkPair O m) = O
+subp (mkPair n O) = n
+subp (mkPair (S n) (S m)) = subp (mkPair n m)
+
+expp: pair nat nat -> nat
+expp (mkPair x O) = S O
+expp (mkPair x (S n)) = multp (mkPair x (expp (mkPair x n)))
+
+lep: pair nat nat -> bool
+lep (mkPair O m) = true
+lep (mkPair (S n) O) = false
+lep (mkPair (S n) (S m)) = lep (mkPair n m)
+
+eqp: pair nat nat -> bool
+eqp (mkPair O O) = true
+eqp (mkPair O b) = false
+eqp (mkPair a O) = false
+eqp (mkPair (S a) (S b)) = eqp (mkPair a b)
+
+-- having trouble distinguishing b/w gtp and gep
+
+gtp: pair nat nat -> bool
+gtp (mkPair O (S b)) = false
+gtp (mkPair (S a) O) = true
+gtp (mkPair (S a) (S b)) = gtp (mkPair a b)
+
+gep:  pair nat nat -> bool
+gep (mkPair a b) = not (lep (mkPair a b))
+
+ltp: pair nat nat -> bool
+ltp (mkPair a b) = not (ltp (mkPair a b))
+
+
+
+
